@@ -183,9 +183,8 @@ class CodeGenProxy:
                 # Fake some log probs for top_logprobs
                 top_logprobs = []
                 for ii, t in enumerate(tokens_str):
-                    fakedict = {}
                     top_token_lp = float(lps[ii])
-                    fakedict[t] = top_token_lp
+                    fakedict = {t: top_token_lp}
                     while len(fakedict) < num_logprobs:
                         random_token = random.randint(0, self.tokenizer.get_vocab_size() - 1)
                         random_token_str = self.tokenizer.decode([random_token])
