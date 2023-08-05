@@ -125,9 +125,7 @@ def run_inference(
     response = requests.post(endpoint, json=data)
     response.raise_for_status()
 
-    if return_all:
-        return response.json()
-    return response.json()["choices"][0]["text"]
+    return response.json() if return_all else response.json()["choices"][0]["text"]
 
 
 @pytest.mark.parametrize("n_gpus", [0])  # we don't have a GPU on CI

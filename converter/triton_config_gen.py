@@ -56,16 +56,16 @@ with open(args.template, 'r') as f:
 
 model_name = os.path.basename(args.hf_model_dir)
 version = '1'
-params = {}
-params['tensor_para_size'] = args.num_gpu
-params['name'] = model_name
-params['max_seq_len'] = max_seq_len
-params['is_half'] = is_half
-params['head_num'] = config.n_head
-params['size_per_head'] = config.n_embd // config.n_head
-params['inter_size'] = 4*config.n_embd
-# Vocab size *sometimes* gets rounded up to a multiple of 1024
-params['vocab_size'] = tokenizer.vocab_size+len(tokenizer.get_added_vocab())  # round_up(tokenizer.vocab_size, 1024)
+params = {
+    'tensor_para_size': args.num_gpu,
+    'name': model_name,
+    'max_seq_len': max_seq_len,
+    'is_half': is_half,
+    'head_num': config.n_head,
+    'size_per_head': config.n_embd // config.n_head,
+    'inter_size': 4 * config.n_embd,
+    'vocab_size': tokenizer.vocab_size + len(tokenizer.get_added_vocab()),
+}
 params['start_id'] = tokenizer.eos_token_id
 params['end_id'] = tokenizer.eos_token_id
 params['decoder_layers'] = config.n_layer
